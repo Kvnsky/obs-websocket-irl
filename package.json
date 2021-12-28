@@ -1,0 +1,22 @@
+{
+  "name": "websocket-gamma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon ./index.js"
+  },
+  "keywords": [],
+  "author": "Kvnsky",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "obs-websocket-js": "^4.0.3",
+    "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "nodemon": "^2.0.15"
+  }
+}
