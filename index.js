@@ -78,7 +78,7 @@ client.on('message', (channel, tags, message, self) => {
             position: { x: 0, y: 0 },
             scale: { x: 1, y: 1 },
           });
-          client.say(channel, 'Scene is now NORMAL');
+          client.say(channel, 'Source is now NORMAL');
         } else {
           obs.send('SetSceneItemProperties', {
             item: process.env.SOURCE_NAME,
@@ -87,7 +87,7 @@ client.on('message', (channel, tags, message, self) => {
             position: { x: 1920, y: 1080 },
             scale: { x: -1, y: -1 },
           });
-          client.say(channel, 'Scene is now FLIPPED');
+          client.say(channel, 'Source is now FLIPPED');
         }
       })
       .catch((err) => {
