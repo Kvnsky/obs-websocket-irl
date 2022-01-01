@@ -59,20 +59,40 @@ client.on('message', (channel, tags, message, self) => {
       });
   }
 
-  obs
-    .send('SetSceneItemProperties', {
-      item: process.env.SOURCE_NAME,
-      height: -1080,
-      position: { alignment: 5, x: 1920, y: 1080 },
-      scale: { filter: 'OBS_SCALE_DISABLE', x: -1, y: -1 },
-      width: -1920,
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (isModUp && message.toLowerCase() === '!flip') {
+    obs
+      .send('GetSceneItemProperties', { item: process.env.SOURCE_NAME })
+      .then((data) => {
+        if (
+          data.height === -1080 &&
+          data.position.alignment === 5 &&
+          data.position.x === 1920 &&
+          data.position.y === 1080 &&
+          data.scale.filter === 'OBS_SCALE_DISABLE' &&
+          data.scale.x === -1 &&
+          data.scale.y === -1 &&
+          data.width === -1920
+        ) {
+          obs.send('SetSceneItemProperties', {
+            item: process.env.SOURCE_NAME,
+            height: 1080,
+            position: { alignment: 5, x: 0, y: 0 },
+            scale: { filter: 'OBS_SCALE_DISABLE', x: 1, y: 1 },
+            width: 1920,
+          });
+          client.say(channel, 'Scene is now NORMAL');
+        } else {
+          obs.send('SetSceneItemProperties', {
+            item: process.env.SOURCE_NAME,
+            height: -1080,
+            position: { alignment: 5, x: 1920, y: 1080 },
+            scale: { filter: 'OBS_SCALE_DISABLE', x: -1, y: -1 },
+            width: -1920,
+          });
+          client.say(channel, 'Scene is now FLIPPED');
+        }
+      });
+  }
 });
 
 obs.on('error', (err) => {
