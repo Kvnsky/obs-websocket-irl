@@ -58,6 +58,21 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `Error: ${err.error}`);
       });
   }
+
+  obs
+    .send('SetSceneItemProperties', {
+      item: process.env.SOURCE_NAME,
+      height: -1080,
+      position: { alignment: 5, x: 1920, y: 1080 },
+      scale: { filter: 'OBS_SCALE_DISABLE', x: -1, y: -1 },
+      width: -1920,
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 obs.on('error', (err) => {
