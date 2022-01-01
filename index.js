@@ -91,6 +91,9 @@ client.on('message', (channel, tags, message, self) => {
           });
           client.say(channel, 'Scene is now FLIPPED');
         }
+      })
+      .catch((err) => {
+        client.say(channel, `Error: ${err.error}`);
       });
   }
 });
