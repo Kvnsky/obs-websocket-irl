@@ -58,6 +58,42 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `Error: ${err.error}`);
       });
   }
+
+  if (isModUp && message.toLowerCase() === '!flip') {
+    obs
+      .send('GetSceneItemProperties', { item: process.env.SOURCE_NAME })
+      .then((data) => {
+        if (
+          data.height === -1080 &&
+          data.width === -1920 &&
+          data.position.x === 1920 &&
+          data.position.y === 1080 &&
+          data.scale.x === -1 &&
+          data.scale.y === -1
+        ) {
+          obs.send('SetSceneItemProperties', {
+            item: process.env.SOURCE_NAME,
+            height: 1080,
+            width: 1920,
+            position: { x: 0, y: 0 },
+            scale: { x: 1, y: 1 },
+          });
+          client.say(channel, 'Source is now NORMAL');
+        } else {
+          obs.send('SetSceneItemProperties', {
+            item: process.env.SOURCE_NAME,
+            height: -1080,
+            width: -1920,
+            position: { x: 1920, y: 1080 },
+            scale: { x: -1, y: -1 },
+          });
+          client.say(channel, 'Source is now FLIPPED');
+        }
+      })
+      .catch((err) => {
+        client.say(channel, `Error: ${err.error}`);
+      });
+  }
 });
 
 obs.on('error', (err) => {
