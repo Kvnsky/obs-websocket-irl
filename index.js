@@ -22,26 +22,6 @@ obs
     console.log(`WebSocket Error: ${err.code}`);
   });
 
-obs.on('ConnectionClosed', () => {
-  setTimeout(() => {
-    obs
-      .connect({
-        address: process.env.WS_ADDRESS,
-        password: process.env.WS_PASSWORD,
-      })
-      .then(() => {
-        console.log(`WebSocket: connected & authenticated.`);
-      })
-      .catch(() => {
-        console.log(`WebSocket: trying to reconnect!`);
-      });
-  }, 5000);
-});
-
-obs.on('error', (err) => {
-  console.log('WebSocket Error:', err);
-});
-
 const client = new tmi.Client({
   options: { debug: true },
   identity: {
@@ -121,4 +101,38 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `Error: ${err.error}`);
       });
   }
+});
+
+obs.on('StreamStarting', () => {
+  obs
+    .send('SetSceneItemProperties', {
+      item: process.env.SOURCE_NAME,
+      height: 1080,
+      width: 1920,
+      position: { x: 0, y: 0 },
+      scale: { x: 1, y: 1 },
+    })
+    .catch((err) => {
+      console.log(`WebSocket Error: ${err.code}`);
+    });
+});
+
+obs.on('ConnectionClosed', () => {
+  setTimeout(() => {
+    obs
+      .connect({
+        address: process.env.WS_ADDRESS,
+        password: process.env.WS_PASSWORD,
+      })
+      .then(() => {
+        console.log(`WebSocket: connected & authenticated.`);
+      })
+      .catch(() => {
+        console.log(`WebSocket: trying to reconnect!`);
+      });
+  }, 5000);
+});
+
+obs.on('error', (err) => {
+  console.log(`WebSocket Error: ${err.code}`);
 });
