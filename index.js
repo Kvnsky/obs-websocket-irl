@@ -115,6 +115,16 @@ obs.on('StreamStarting', () => {
     .catch((err) => {
       console.log(`WebSocket Error: ${err.code}`);
     });
+
+  obs
+    .send('SetSourceFilterVisibility', {
+      sourceName: process.env.SOURCE_NAME,
+      filterName: process.env.FILTER_NAME,
+      filterEnabled: false,
+    })
+    .catch((err) => {
+      console.log(`WebSocket Error: ${err.code}`);
+    });
 });
 
 obs.on('ConnectionClosed', () => {
