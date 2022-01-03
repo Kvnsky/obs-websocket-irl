@@ -1,7 +1,14 @@
 const tmi = require('tmi.js');
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 5000;
 require('dotenv').config();
+
+app.listen(port, function () {
+  console.log(`Server running on ${port}`);
+});
 
 obs
   .connect({
@@ -28,7 +35,7 @@ obs.on('ConnectionClosed', () => {
       .catch(() => {
         console.log(`WebSocket: trying to reconnect!`);
       });
-  }, 15000);
+  }, 5000);
 });
 
 obs.on('error', (err) => {
