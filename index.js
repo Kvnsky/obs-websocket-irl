@@ -9,11 +9,31 @@ obs
     password: process.env.WS_PASSWORD,
   })
   .then(() => {
-    console.log(`Websocket connected & authenticated.`);
+    console.log(`WebSocket: connected & authenticated.`);
   })
   .catch((err) => {
-    console.log(err);
+    console.log(`WebSocket Error: ${err.code}`);
   });
+
+obs.on('ConnectionClosed', () => {
+  setTimeout(() => {
+    obs
+      .connect({
+        address: process.env.WS_ADDRESS,
+        password: process.env.WS_PASSWORD,
+      })
+      .then(() => {
+        console.log(`WebSocket: connected & authenticated.`);
+      })
+      .catch(() => {
+        console.log(`WebSocket: trying to reconnect!`);
+      });
+  }, 15000);
+});
+
+obs.on('error', (err) => {
+  console.log('WebSocket Error:', err);
+});
 
 const client = new tmi.Client({
   options: { debug: true },
@@ -94,8 +114,4 @@ client.on('message', (channel, tags, message, self) => {
         client.say(channel, `Error: ${err.error}`);
       });
   }
-});
-
-obs.on('error', (err) => {
-  console.log('socket error:', err);
 });
