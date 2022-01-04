@@ -6,13 +6,13 @@ const app = express();
 const port = process.env.PORT || 5000;
 require('dotenv').config();
 
-app.listen(port, function () {
+app.listen(port, () => {
   console.log(`Server running on ${port}`);
 });
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/qr', function (req, res) {
+app.get('/qr', (req, res) => {
   res.sendFile(__dirname + '/public/qr.html');
 });
 
