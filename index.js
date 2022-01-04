@@ -137,7 +137,7 @@ obs.on('StreamStarting', () => {
       scale: { x: 1, y: 1 },
     })
     .catch((err) => {
-      console.log(`WebSocket Error: ${err}`);
+      console.log(`WebSocket Error - Reset flip on start: ${err}`);
     });
 
   obs
@@ -147,7 +147,7 @@ obs.on('StreamStarting', () => {
       filterEnabled: false,
     })
     .catch((err) => {
-      console.log(`WebSocket Error: ${err}`);
+      console.log(`WebSocket Error - Reset gamma on start: ${err}`);
     });
 });
 
