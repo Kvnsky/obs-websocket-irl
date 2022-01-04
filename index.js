@@ -10,6 +10,12 @@ app.listen(port, function () {
   console.log(`Server running on ${port}`);
 });
 
+app.use(express.static(__dirname + '/public'));
+
+app.get('/qr', function (req, res) {
+  res.sendFile(__dirname + '/public/qr.html');
+});
+
 obs
   .connect({
     address: process.env.WS_ADDRESS,
@@ -19,7 +25,7 @@ obs
     console.log(`WebSocket: connected & authenticated.`);
   })
   .catch((err) => {
-    console.log(`WebSocket Error: ${err}`);
+    console.log(`WebSocket Error:`, err);
   });
 
 const client = new tmi.Client({
@@ -137,7 +143,7 @@ obs.on('StreamStarting', () => {
       scale: { x: 1, y: 1 },
     })
     .catch((err) => {
-      console.log(`WebSocket Error - Reset flip on start: ${err}`);
+      console.log(`WebSocket Error - Reset flip on start:`, err);
     });
 
   obs
@@ -147,7 +153,7 @@ obs.on('StreamStarting', () => {
       filterEnabled: false,
     })
     .catch((err) => {
-      console.log(`WebSocket Error - Reset gamma on start: ${err}`);
+      console.log(`WebSocket Error - Reset gamma on start:`, err);
     });
 });
 
@@ -168,5 +174,5 @@ obs.on('ConnectionClosed', () => {
 });
 
 obs.on('error', (err) => {
-  console.log(`WebSocket Error: ${err}`);
+  console.log(`WebSocket Error:`, err);
 });
