@@ -19,7 +19,7 @@ obs
     console.log(`WebSocket: connected & authenticated.`);
   })
   .catch((err) => {
-    console.log(`WebSocket Error: ${err.code}`);
+    console.log(`WebSocket Error: ${err}`);
   });
 
 const client = new tmi.Client({
@@ -83,7 +83,7 @@ client.on('message', (channel, tags, message, self) => {
           client.say(channel, `Gamma changed to ${data.settings.gamma}`);
         })
         .catch((err) => {
-          client.say(channel, `Error: ${err}`);
+          client.say(channel, `Error: ${err.error}`);
         });
     }
   }
@@ -137,7 +137,7 @@ obs.on('StreamStarting', () => {
       scale: { x: 1, y: 1 },
     })
     .catch((err) => {
-      console.log(`WebSocket Error: ${err.code}`);
+      console.log(`WebSocket Error: ${err}`);
     });
 
   obs
@@ -147,7 +147,7 @@ obs.on('StreamStarting', () => {
       filterEnabled: false,
     })
     .catch((err) => {
-      console.log(`WebSocket Error: ${err.code}`);
+      console.log(`WebSocket Error: ${err}`);
     });
 });
 
@@ -168,5 +168,5 @@ obs.on('ConnectionClosed', () => {
 });
 
 obs.on('error', (err) => {
-  console.log(`WebSocket Error: ${err.code}`);
+  console.log(`WebSocket Error: ${err}`);
 });
