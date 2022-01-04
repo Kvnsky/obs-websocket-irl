@@ -10,12 +10,6 @@ app.listen(port, () => {
   console.log(`Server running on ${port}`);
 });
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/qr', (req, res) => {
-  res.sendFile(__dirname + '/public/qr.html');
-});
-
 obs
   .connect({
     address: process.env.WS_ADDRESS,
