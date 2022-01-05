@@ -127,7 +127,7 @@ client.on('message', (channel, tags, message, self) => {
   }
 });
 
-obs.on('StreamStarting', () => {
+obs.on('StreamStopping', () => {
   obs
     .send('SetSceneItemProperties', {
       item: process.env.SOURCE_NAME,
