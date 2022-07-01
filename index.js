@@ -17,6 +17,7 @@ obs
   })
   .then(() => {
     console.log(`WebSocket: connected & authenticated.`);
+    client.say(channel, "OWI - Connected")
   })
   .catch((err) => {
     console.log(`WebSocket Error:`, err);
